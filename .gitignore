@@ -1,4 +1,8 @@
+############################
+# Maven
+############################
 target/
+.metadata
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -6,12 +10,75 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
-# https://maven.apache.org/wrapper/#usage-without-binary-jar
+
+############################
+# Maven Wrapper
+############################
 .mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
+############################
+# Spring Boot
+############################
+HELP.md
+*.log
+logs/
+
+############################
+# STS / Eclipse
+############################
+.apt_generated
 .classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+############################
+# IntelliJ
+############################
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+############################
+# VS Code
+############################
+.vscode/
+
+############################
+# NetBeans
+############################
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+############################
+# Build folders
+############################
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+############################
+# OS files
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# Environment files
+############################
+.env
+.env.*
+
+############################
+# Logs
+############################
+*.log
+/.metadata/
