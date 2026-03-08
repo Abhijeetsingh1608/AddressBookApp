@@ -4,6 +4,7 @@ import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
 import org.junit.jupiter.api.*;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -578,5 +579,75 @@ public class AddressBookServiceTest {
                 new Contact("Rahul","Verma","","Ariana","DL","","",""));
 
         assertEquals(2, service.searchByCity("Ariana").size());
+    }
+    
+    @Test
+    public void givenContacts_whenGroupedByCity_shouldReturnCityMap() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Rahul","Verma","","Delhi","DL","","",""));
+
+        Map<String, List<Contact>> result = service.viewPersonsByCity();
+
+        assertTrue(result.containsKey("Ariana"));
+        assertTrue(result.containsKey("Delhi"));
+    }
+    
+    @Test
+    public void givenMultipleContactsSameCity_whenGrouped_shouldReturnList() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Amit","Sharma","","Ariana","Geornite","","",""));
+
+        Map<String, List<Contact>> result = service.viewPersonsByCity();
+
+        assertEquals(2, result.get("Ariana").size());
+    }
+    
+    @Test
+    public void givenContacts_whenGroupedByState_shouldReturnStateMap() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        Map<String, List<Contact>> result = service.viewPersonsByState();
+
+        assertTrue(result.containsKey("Geornite"));
+    }
+    
+    @Test
+    public void givenNoContacts_whenGrouped_shouldReturnEmptyMap() {
+
+        AddressBookService service = new AddressBookService();
+
+        assertEquals(0, service.viewPersonsByCity().size());
+    }
+    
+    @Test
+    public void givenContactsAcrossBooks_whenGrouped_shouldCombineResults() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Rahul","Verma","","Delhi","DL","","",""));
+
+        Map<String, List<Contact>> result = service.viewPersonsByCity();
+
+        assertEquals(2, result.size());
     }
 }
