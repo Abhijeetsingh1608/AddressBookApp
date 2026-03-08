@@ -3,8 +3,6 @@ package com.addressbook;
 import com.addressbook.model.Contact;
 import org.junit.jupiter.api.Test;
 
-import com.addressbook.Contact;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ContactTest {
