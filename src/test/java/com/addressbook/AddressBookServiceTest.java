@@ -518,4 +518,65 @@ public class AddressBookServiceTest {
             service.addContact("personal", new Contact("Tarus","Prabhat","","","","","",""));
         });
     }
+    
+    @Test
+    public void givenContacts_whenSearchByCity_shouldReturnMatches() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c1 = new Contact("Tarus","Prabhat","","Ariana","Geornite","","","");
+        Contact c2 = new Contact("Rahul","Verma","","Delhi","DL","","","");
+
+        service.addContact("personal", c1);
+        service.addContact("office", c2);
+
+        assertEquals(1, service.searchByCity("Ariana").size());
+    }
+    
+    @Test
+    public void givenContacts_whenSearchByState_shouldReturnMatches() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c1 = new Contact("Tarus","Prabhat","","Ariana","Geornite","","","");
+        Contact c2 = new Contact("Rahul","Verma","","Delhi","DL","","","");
+
+        service.addContact("personal", c1);
+        service.addContact("office", c2);
+
+        assertEquals(1, service.searchByState("DL").size());
+    }
+    
+    @Test
+    public void givenUnknownCity_whenSearch_shouldReturnEmptyList() {
+
+        AddressBookService service = new AddressBookService();
+
+        assertEquals(0, service.searchByCity("Unknown").size());
+    }
+    
+    @Test
+    public void givenDifferentCaseCity_whenSearch_shouldStillMatch() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c = new Contact("Tarus","Prabhat","","Ariana","Geornite","","","");
+        service.addContact("personal", c);
+
+        assertEquals(1, service.searchByCity("ariana").size());
+    }
+    
+    @Test
+    public void givenMultipleContactsSameCity_whenSearch_shouldReturnAll() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Rahul","Verma","","Ariana","DL","","",""));
+
+        assertEquals(2, service.searchByCity("Ariana").size());
+    }
 }

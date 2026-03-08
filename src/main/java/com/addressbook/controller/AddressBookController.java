@@ -1,8 +1,10 @@
 package com.addressbook.controller;
 
+import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/addressbooks")
@@ -45,5 +47,35 @@ public class AddressBookController {
         }
 
         return "Contact not found";
+    }
+    
+    @GetMapping("/{bookName}/contacts")
+    public List<Contact> getContacts(@PathVariable String bookName) {
+
+        return service.getContacts(bookName);
+    }
+    
+    @PostMapping("/{name}")
+    public AddressBook createAddressBook(@PathVariable String name) {
+
+        return service.createAddressBook(name);
+    }
+    
+    @GetMapping
+    public Map<String, AddressBook> getAllAddressBooks() {
+
+        return service.getAllAddressBooks();
+    }
+    
+    @GetMapping("/search/city/{city}")
+    public List<Contact> searchByCity(@PathVariable String city) {
+
+        return service.searchByCity(city);
+    }
+    
+    @GetMapping("/search/state/{state}")
+    public List<Contact> searchByState(@PathVariable String state) {
+
+        return service.searchByState(state);
     }
 }
