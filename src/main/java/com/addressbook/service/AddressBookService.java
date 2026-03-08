@@ -80,6 +80,22 @@ public class AddressBookService {
         return book.getContacts();
     }
 
+    public AddressBook createAddressBook(String name) {
+
+        if(addressBooks.containsKey(name)) {
+            return addressBooks.get(name);
+        }
+
+        AddressBook book = new AddressBook(name);
+        addressBooks.put(name, book);
+
+        return book;
+    }
+
+    public Map<String, AddressBook> getAllAddressBooks() {
+        return addressBooks;
+    }
+    
     public AddressBook getAddressBook(String name) {
         return addressBooks.get(name);
     }
