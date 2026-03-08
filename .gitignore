@@ -81,4 +81,10 @@ Thumbs.db
 # Logs
 ############################
 *.log
-/.metadata/
+
+############################
+# Other files
+############################
+src/test/resources/testdata/*.txt
+src/test/resources/testdata/*.csv
+src/test/resources/testdata/*.json
