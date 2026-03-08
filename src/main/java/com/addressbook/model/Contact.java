@@ -114,16 +114,4 @@ public class Contact {
 
         return Objects.hash(firstName, lastName);
     }
-    
-    @Override
-    public String toString() {
-
-        return "Contact{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
 }
