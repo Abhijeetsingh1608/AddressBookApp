@@ -650,4 +650,77 @@ public class AddressBookServiceTest {
 
         assertEquals(2, result.size());
     }
+    
+    @Test
+    public void givenContacts_whenCountByCity_shouldReturnCorrectCounts() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Amit","Sharma","","Ariana","Geornite","","",""));
+
+        Map<String, Long> result = service.countContactsByCity();
+
+        assertEquals(2, result.get("Ariana"));
+    }
+    
+    @Test
+    public void givenContacts_whenCountByState_shouldReturnCorrectCounts() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Rahul","Verma","","Delhi","DL","","",""));
+
+        Map<String, Long> result = service.countContactsByState();
+
+        assertEquals(1, result.get("Geornite"));
+        assertEquals(1, result.get("DL"));
+    }
+    
+    @Test
+    public void givenNoContacts_whenCount_shouldReturnEmptyMap() {
+
+        AddressBookService service = new AddressBookService();
+
+        assertEquals(0, service.countContactsByCity().size());
+    }
+    
+    @Test
+    public void givenContactsAcrossBooks_whenCount_shouldCombineResults() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Rahul","Verma","","Ariana","DL","","",""));
+
+        Map<String, Long> result = service.countContactsByCity();
+
+        assertEquals(2, result.get("Ariana"));
+    }
+    
+    @Test
+    public void givenCityDifferentCase_whenCount_shouldTreatSeparately() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","Geornite","","",""));
+
+        service.addContact("office",
+                new Contact("Rahul","Verma","","ariana","DL","","",""));
+
+        Map<String, Long> result = service.countContactsByCity();
+
+        assertEquals(1, result.get("Ariana"));
+    }
 }
