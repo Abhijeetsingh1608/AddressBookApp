@@ -779,4 +779,71 @@ public class AddressBookServiceTest {
 
         assertEquals("Amit", sorted.get(0).getFirstName());
     }
+    
+    @Test
+    public void givenContacts_whenSortedByCity_shouldReturnSortedList() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","","","",""));
+
+        service.addContact("personal",
+                new Contact("Rahul","Verma","","Delhi","","","",""));
+
+        List<Contact> sorted = service.sortContactsByCity("personal");
+
+        assertEquals("Ariana", sorted.get(0).getCity());
+    }
+    
+    @Test
+    public void givenContacts_whenSortedByState_shouldReturnSortedList() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","","Geornite","","",""));
+
+        service.addContact("personal",
+                new Contact("Rahul","Verma","","","DL","","",""));
+
+        List<Contact> sorted = service.sortContactsByState("personal");
+
+        assertEquals("DL", sorted.get(0).getState());
+    }
+    
+    @Test
+    public void givenContacts_whenSortedByZip_shouldReturnSortedList() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","","","567834","",""));
+
+        service.addContact("personal",
+                new Contact("Rahul","Verma","","","","110001","",""));
+
+        List<Contact> sorted = service.sortContactsByZip("personal");
+
+        assertEquals("110001", sorted.get(0).getZip());
+    }
+    
+    @Test
+    public void givenEmptyBook_whenSorted_shouldReturnEmptyList() {
+
+        AddressBookService service = new AddressBookService();
+
+        assertEquals(0, service.sortContactsByCity("personal").size());
+    }
+    
+    @Test
+    public void givenSingleContact_whenSorted_shouldReturnSame() {
+
+        AddressBookService service = new AddressBookService();
+
+        service.addContact("personal",
+                new Contact("Tarus","Prabhat","","Ariana","","","",""));
+
+        assertEquals(1, service.sortContactsByCity("personal").size());
+    }
 }
