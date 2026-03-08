@@ -3,7 +3,7 @@ package com.addressbook;
 import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import com.addressbook.service.AddressBookService;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +12,7 @@ public class AddressBookServiceTest {
     private Contact createContact() {
 
         return new Contact(
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 "New City",
                 "Ariana",
@@ -32,7 +32,7 @@ public class AddressBookServiceTest {
 
         Contact result = service.addContact("personal", contact);
 
-        assertEquals("Abhijeet", result.getFirstName());
+        assertEquals("Tarus", result.getFirstName());
         assertEquals("Prabhat", result.getLastName());
     }
 
@@ -48,6 +48,7 @@ public class AddressBookServiceTest {
         assertNotNull(service.getAddressBook("office"));
     }
 
+    @Disabled
     @Test
     public void givenMultipleContacts_whenAdded_shouldStoreAllContacts() {
 
@@ -115,6 +116,7 @@ public class AddressBookServiceTest {
                 service.getAddressBook("personal").getContacts().size());
     }
 
+    @Disabled
     @Test
     public void givenSameContactTwice_whenAdded_shouldAllowDuplicatesForNow() {
 
@@ -136,7 +138,7 @@ public class AddressBookServiceTest {
         AddressBookService service = new AddressBookService();
 
         Contact contact = new Contact(
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 "New City",
                 "Ariana",
@@ -158,7 +160,7 @@ public class AddressBookServiceTest {
         AddressBookService service = new AddressBookService();
 
         Contact contact = new Contact(
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 "New City",
                 "Ariana",
@@ -198,7 +200,7 @@ public class AddressBookServiceTest {
         AddressBookService service = new AddressBookService();
 
         Contact original = new Contact(
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 "New City",
                 "Ariana",
@@ -211,7 +213,7 @@ public class AddressBookServiceTest {
         service.addContact("personal", original);
 
         Contact updated = new Contact(
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 "Future City",
                 "Nova",
@@ -223,7 +225,7 @@ public class AddressBookServiceTest {
 
         Contact result = service.updateContact(
                 "personal",
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 updated
         );
@@ -258,7 +260,7 @@ public class AddressBookServiceTest {
 
         Contact result = service.updateContact(
                 "unknownBook",
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 updated
         );
@@ -272,7 +274,7 @@ public class AddressBookServiceTest {
         AddressBookService service = new AddressBookService();
 
         Contact contact = new Contact(
-                "Abhijeet",
+                "Tarus",
                 "Prabhat",
                 "New City",
                 "Ariana",
@@ -286,7 +288,7 @@ public class AddressBookServiceTest {
 
         boolean result = service.deleteContact(
                 "personal",
-                "Abhijeet",
+                "Tarus",
                 "Prabhat"
         );
 
@@ -314,7 +316,7 @@ public class AddressBookServiceTest {
 
         boolean result = service.deleteContact(
                 "unknownBook",
-                "Abhijeet",
+                "Tarus",
                 "Prabhat"
         );
 
@@ -327,7 +329,7 @@ public class AddressBookServiceTest {
         AddressBookService service = new AddressBookService();
 
         Contact c1 = new Contact(
-                "Abhijeet","Prabhat","New City","Ariana","Geornite",
+                "Tarus","Prabhat","New City","Ariana","Geornite",
                 "567834","7634237809","tp@gmail.com");
 
         Contact c2 = new Contact(
@@ -353,7 +355,7 @@ public class AddressBookServiceTest {
 
         AddressBookService service = new AddressBookService();
 
-        Contact c1 = new Contact("Abhijeet","Prabhat","","","","","","");
+        Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
         Contact c2 = new Contact("Rahul","Verma","","","","","","");
 
         service.addContact("personal", c1);
@@ -363,12 +365,13 @@ public class AddressBookServiceTest {
         assertEquals(1, service.getContacts("office").size());
     }
     
+    @Disabled
     @Test
     public void givenDuplicateContacts_whenAdded_shouldAllowDuplicates() {
 
         AddressBookService service = new AddressBookService();
 
-        Contact c = new Contact("Abhijeet","Prabhat","","","","","","");
+        Contact c = new Contact("Tarus","Prabhat","","","","","","");
 
         service.addContact("personal", c);
         service.addContact("personal", c);
@@ -432,7 +435,7 @@ public class AddressBookServiceTest {
         service.createAddressBook("personal");
         service.createAddressBook("office");
 
-        Contact c1 = new Contact("Abhijeet","Prabhat","","","","","","");
+        Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
         Contact c2 = new Contact("Rahul","Verma","","","","","","");
 
         service.addContact("personal", c1);
@@ -452,5 +455,67 @@ public class AddressBookServiceTest {
 
         assertTrue(service.getAllAddressBooks().containsKey("personal"));
         assertTrue(service.getAllAddressBooks().containsKey("office"));
+    }
+    
+    @Test
+    public void givenDuplicateContact_whenAdded_shouldThrowException() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c1 = new Contact(
+                "Tarus","Prabhat","New City","Ariana",
+                "Geornite","567834","7634237809","tp@gmail.com");
+
+        Contact c2 = new Contact(
+                "Tarus","Prabhat","Other","Other",
+                "Other","111111","9999999999","dup@gmail.com");
+
+        service.addContact("personal", c1);
+
+        assertThrows(RuntimeException.class, () -> {
+            service.addContact("personal", c2);
+        });
+    }
+    
+    @Test
+    public void givenSameContactInDifferentBooks_shouldBeAllowed() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c = new Contact("Tarus","Prabhat","","","","","","");
+
+        service.addContact("personal", c);
+        service.addContact("office", c);
+
+        assertEquals(1, service.getContacts("personal").size());
+        assertEquals(1, service.getContacts("office").size());
+    }
+    
+    @Test
+    public void givenDifferentContacts_whenAdded_shouldAllow() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
+        Contact c2 = new Contact("Rahul","Verma","","","","","","");
+
+        service.addContact("personal", c1);
+        service.addContact("personal", c2);
+
+        assertEquals(2, service.getContacts("personal").size());
+    }
+    
+    @Test
+    public void givenExistingDuplicate_whenChecked_shouldPreventDuplicate() {
+
+        AddressBookService service = new AddressBookService();
+
+        Contact c1 = new Contact("Tarus","Prabhat","","","","","","");
+
+        service.addContact("personal", c1);
+
+        assertThrows(RuntimeException.class, () -> {
+            service.addContact("personal", new Contact("Tarus","Prabhat","","","","","",""));
+        });
     }
 }
