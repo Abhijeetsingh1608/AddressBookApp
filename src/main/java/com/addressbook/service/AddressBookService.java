@@ -1,12 +1,10 @@
-
 package com.addressbook.service;
 
 import com.addressbook.model.AddressBook;
 import com.addressbook.model.Contact;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AddressBookService {
@@ -69,6 +67,17 @@ public class AddressBookService {
 
         return book.getContacts().removeIf(contact -> contact.getFirstName().equals(firstName) &&
                 contact.getLastName().equals(lastName));
+    }
+    
+    public List<Contact> getContacts(String bookName) {
+
+        AddressBook book = addressBooks.get(bookName);
+
+        if (book == null) {
+            return new ArrayList<>();
+        }
+
+        return book.getContacts();
     }
 
     public AddressBook getAddressBook(String name) {
