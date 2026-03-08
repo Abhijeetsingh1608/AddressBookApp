@@ -1,3 +1,4 @@
+
 package com.addressbook.service;
 
 import com.addressbook.model.AddressBook;
@@ -54,6 +55,20 @@ public class AddressBookService {
         }
 
         return null;
+    }
+
+    public boolean deleteContact(String bookName,
+            String firstName,
+            String lastName) {
+
+        AddressBook book = addressBooks.get(bookName);
+
+        if (book == null) {
+            return false;
+        }
+
+        return book.getContacts().removeIf(contact -> contact.getFirstName().equals(firstName) &&
+                contact.getLastName().equals(lastName));
     }
 
     public AddressBook getAddressBook(String name) {
