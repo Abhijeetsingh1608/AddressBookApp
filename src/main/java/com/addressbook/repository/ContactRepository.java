@@ -70,4 +70,42 @@ public class ContactRepository {
             throw new RuntimeException(e);
         }
     }
+    
+    public List<Contact> getContactsByDateRange(String startDate, String endDate) {
+
+        List<Contact> contacts = new ArrayList<>();
+
+        String query =
+                "SELECT * FROM contacts WHERE date_added BETWEEN ? AND ?";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, startDate);
+            statement.setString(2, endDate);
+
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()) {
+
+                Contact contact = new Contact(
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        "",
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("zip"),
+                        rs.getString("phone"),
+                        rs.getString("email")
+                );
+
+                contacts.add(contact);
+            }
+
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return contacts;
+    }
 }
